@@ -1,6 +1,6 @@
 [package]
 name = "zbus_polkit"
-version = "3.0.1"
+version = "4.0.0"
 authors = ["Marc-André Lureau <marcandre.lureau@redhat.com>"]
 edition = "2021"
 rust-version = "1.64"
@@ -17,7 +17,7 @@ default = ["zbus/async-io"]
 tokio = ["zbus/tokio"]
 
 [dependencies]
-zbus = { version = "3", default-features = false }
+zbus = { version = "4", default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 serde_repr = "0.1.9"
 enumflags2 = { version = "0.7.7", features = ["serde"] }

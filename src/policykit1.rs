@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use static_assertions::assert_impl_all;
 use zbus::{
-    dbus_proxy, fdo,
+    fdo,
+    names::OwnedUniqueName,
     zvariant::{OwnedValue, Type, Value},
 };
 
@@ -190,9 +191,9 @@ impl Subject {
             None => pid_uid_racy(pid)?,
         };
         let mut hashmap = HashMap::new();
-        hashmap.insert("pid".to_string(), Value::from(pid).into());
-        hashmap.insert("start-time".to_string(), Value::from(start_time).into());
-        hashmap.insert("uid".to_string(), Value::from(uid).into());
+        hashmap.insert("pid".to_string(), pid.into());
+        hashmap.insert("start-time".to_string(), start_time.into());
+        hashmap.insert("uid".to_string(), uid.into());
 
         Ok(Self {
             subject_kind: "unix-process".into(),
@@ -207,19 +208,17 @@ impl Subject {
     ///
     /// * `message_header` - The header of the message which caused an authentication to be
     ///   necessary.
-    pub fn new_for_message_header(
-        message_header: &zbus::MessageHeader<'_>,
-    ) -> Result<Self, Error> {
+    pub fn new_for_message_header(message_header: &zbus::message::Header<'_>) -> Result<Self, Error> {
         let mut subject_details = HashMap::new();
         match message_header.sender() {
-            Ok(Some(sender)) => {
-                subject_details.insert("name".to_string(), Value::from(sender.clone()).into());
+            Some(sender) => {
+                subject_details.insert(
+                    "name".to_string(),
+                    OwnedUniqueName::from(sender.clone()).try_into().unwrap(),
+                );
             }
-            Ok(None) => {
+            None => {
                 return Err(Error::MissingSender);
-            }
-            Err(e) => {
-                return Err(Error::BadSender(e));
             }
         }
 
@@ -293,7 +292,7 @@ assert_impl_all!(AuthorizationResult: Send, Sync, Unpin);
 
 /// This D-Bus interface is implemented by the /org/freedesktop/PolicyKit1/Authority object on the
 /// well-known name org.freedesktop.PolicyKit1 on the system message bus.
-#[dbus_proxy(
+#[zbus::proxy(
     interface = "org.freedesktop.PolicyKit1.Authority",
     default_service = "org.freedesktop.PolicyKit1",
     default_path = "/org/freedesktop/PolicyKit1/Authority"
@@ -440,19 +439,19 @@ trait Authority {
     ) -> zbus::Result<()>;
 
     /// This signal is emitted when actions and/or authorizations change
-    #[dbus_proxy(signal)]
+    #[zbus(signal)]
     fn changed(&self) -> fdo::Result<()>;
 
     /// The features supported by the currently used Authority backend.
-    #[dbus_proxy(property)]
+    #[zbus(property)]
     fn backend_features(&self) -> fdo::Result<AuthorityFeatures>;
 
     /// The name of the currently used Authority backend.
-    #[dbus_proxy(property)]
+    #[zbus(property)]
     fn backend_name(&self) -> fdo::Result<String>;
 
     /// The version of the currently used Authority backend.
-    #[dbus_proxy(property)]
+    #[zbus(property)]
     fn backend_version(&self) -> fdo::Result<String>;
 }
 
