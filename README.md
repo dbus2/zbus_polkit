@@ -1,6 +1,8 @@
 # zbus_polkit
 
-[![](https://docs.rs/zbus_polkit/badge.svg)](https://docs.rs/zbus_polkit/) [![](https://img.shields.io/crates/v/zbus_polkit)](https://crates.io/crates/zbus_polkit)
+[![CI Pipeline Status](https://github.com/dbus2/zbus/actions/workflows/rust.yml/badge.svg)](https://github.com/dbus2/zbus/actions/workflows/rust.yml)
+[![Documentation](https://docs.rs/zbus_polkit/badge.svg)](https://docs.rs/zbus_polkit/)
+[![crates.io](https://img.shields.io/crates/v/zbus_polkit)](https://crates.io/crates/zbus_polkit)
 
 A crate to interact with [PolicyKit], a toolkit for defining and handling authorizations. It is used
 for allowing unprivileged processes to speak to privileged processes.
