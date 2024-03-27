@@ -1,0 +1,67 @@
+# Run `cargo test` on windwos, linux and mac
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    env:
+      RUST_LOG: "trace"
+      RUST_BACKTRACE: "full"
+      RUSTFLAGS: -D warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Run tests on stable Rust
+        run: cargo test
+
+  test_nightly:
+    env:
+      RUST_LOG: "trace"
+      RUST_BACKTRACE: "full"
+      RUSTFLAGS: -D warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+      - uses: Swatinem/rust-cache@v2
+      - name: Run tests on nightly Rust
+        run: cargo test
+
+  fmt:
+    env:
+      RUSTFLAGS: -D warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+  clippy:
+    env:
+      RUSTFLAGS: -D warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Check common mistakes
+        run: cargo clippy --all
