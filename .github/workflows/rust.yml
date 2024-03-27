@@ -14,6 +14,7 @@ jobs:
       RUST_BACKTRACE: "full"
       RUSTFLAGS: -D warnings
     runs-on: ubuntu-latest
+    needs: [fmt, clippy]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
@@ -29,6 +30,7 @@ jobs:
       RUST_BACKTRACE: "full"
       RUSTFLAGS: -D warnings
     runs-on: ubuntu-latest
+    needs: [fmt, clippy]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master

@@ -1,4 +1,4 @@
-use std::{collections::HashMap, convert::TryFrom, io::BufRead, result::Result};
+use std::{collections::HashMap, io::BufRead};
 
 use enumflags2::{bitflags, BitFlags};
 use serde::{Deserialize, Serialize};
@@ -208,7 +208,9 @@ impl Subject {
     ///
     /// * `message_header` - The header of the message which caused an authentication to be
     ///   necessary.
-    pub fn new_for_message_header(message_header: &zbus::message::Header<'_>) -> Result<Self, Error> {
+    pub fn new_for_message_header(
+        message_header: &zbus::message::Header<'_>,
+    ) -> Result<Self, Error> {
         let mut subject_details = HashMap::new();
         match message_header.sender() {
             Some(sender) => {
