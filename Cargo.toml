@@ -1,7 +1,10 @@
 [package]
 name = "zbus_polkit"
 version = "4.0.0"
-authors = ["Marc-André Lureau <marcandre.lureau@redhat.com>"]
+authors = [
+    "Marc-André Lureau <marcandre.lureau@redhat.com>",
+    "Zeeshan Ali Khan <zeenix@gmail.com>",
+]
 edition = "2021"
 rust-version = "1.64"
 
