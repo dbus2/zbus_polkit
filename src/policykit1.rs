@@ -63,7 +63,7 @@ impl TryFrom<OwnedValue> for AuthorityFeatures {
 
     fn try_from(v: OwnedValue) -> Result<Self, Self::Error> {
         // safe because AuthorityFeatures has repr u32
-        Ok(unsafe { std::mem::transmute(<u32>::try_from(v)?) })
+        Ok(unsafe { std::mem::transmute::<u32, AuthorityFeatures>(v.try_into()?) })
     }
 }
 
