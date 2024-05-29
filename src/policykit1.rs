@@ -147,13 +147,13 @@ fn pid_uid_racy(pid: u32) -> Result<u32, Error> {
 /// The following kinds of subjects are known:
 ///
 /// * Unix Process. `subject_kind` should be set to `unix-process` with keys `pid` (of type
-/// `uint32`) and `start-time` (of type `uint64`).
+///   `uint32`) and `start-time` (of type `uint64`).
 ///
 /// * Unix Session. `subject_kind` should be set to `unix-session` with the key `session-id` (of
-/// type `string`).
+///   type `string`).
 ///
 /// * System Bus Name. `subject_kind` should be set to `system-bus-name` with the key `name` (of
-/// type `string`).
+///   type `string`).
 #[derive(Debug, Type, Serialize, Deserialize)]
 pub struct Subject {
     /// The type of the subject.
@@ -176,7 +176,7 @@ impl Subject {
     /// * `start_time` - The start time for `pid` or `None` to look it up in e.g. `/proc`
     ///
     /// * `uid` - The (real, not effective) uid of the owner of `pid` or `None` to look it up in
-    /// e.g. `/proc`
+    ///   e.g. `/proc`
     pub fn new_for_owner(
         pid: u32,
         start_time: Option<u64>,
