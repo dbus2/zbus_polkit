@@ -299,7 +299,7 @@ assert_impl_all!(AuthorizationResult: Send, Sync, Unpin);
     default_service = "org.freedesktop.PolicyKit1",
     default_path = "/org/freedesktop/PolicyKit1/Authority"
 )]
-trait Authority {
+pub trait Authority {
     /// Method for authentication agents to invoke on successful authentication, intended only for
     /// use by a privileged helper process internal to polkit. This method will fail unless a
     /// sufficiently privileged +caller invokes it. Deprecated in favor of
@@ -458,4 +458,5 @@ trait Authority {
 }
 
 assert_impl_all!(AuthorityProxy<'_>: Send, Sync, Unpin);
+#[cfg(feature = "blocking-api")]
 assert_impl_all!(AuthorityProxyBlocking<'_>: Send, Sync, Unpin);
