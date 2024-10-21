@@ -458,4 +458,5 @@ pub trait Authority {
 }
 
 assert_impl_all!(AuthorityProxy<'_>: Send, Sync, Unpin);
+#[cfg(feature = "blocking-api")]
 assert_impl_all!(AuthorityProxyBlocking<'_>: Send, Sync, Unpin);

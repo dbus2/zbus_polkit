@@ -16,8 +16,9 @@ categories = ["os::unix-apis"]
 readme = "README.md"
 
 [features]
-default = ["zbus/async-io"]
+default = ["zbus/async-io", "blocking-api"]
 tokio = ["zbus/tokio"]
+blocking-api = ["zbus/blocking-api"]
 
 [dependencies]
 zbus = { version = "5.0.0", default-features = false }
