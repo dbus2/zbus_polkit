@@ -9,14 +9,14 @@ for allowing unprivileged processes to speak to privileged processes.
 
 **Status:** Stable.
 
-#### Example code
+## Example code
 
 ```rust,no_run
 use zbus::Connection;
 use zbus_polkit::policykit1::*;
 
-// Although we use `async-std` here, you can use any async runtime of choice.
-#[async_std::main]
+// Although we use `tokio` here, you can use any async runtime of choice.
+#[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let connection = Connection::system().await?;
     let proxy = AuthorityProxy::new(&connection).await?;
