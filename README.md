@@ -9,7 +9,7 @@ for allowing unprivileged processes to speak to privileged processes.
 
 **Status:** Stable.
 
-#### Example code
+## Example code
 
 ```rust,no_run
 use zbus::Connection;
